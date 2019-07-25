@@ -5,7 +5,8 @@ import { CarOverviewComponent } from './cars/components/overview/overview.compon
 
 const routes: Routes = [
   { path: 'app/cars/overview', component: CarOverviewComponent },
-  { path: 'app/cars/edit/:id', component: CarEditComponent }
+  { path: 'app/cars/edit/:id', component: CarEditComponent },
+  { path: '', redirectTo: 'app/cars/overview', pathMatch: 'full' }
 ];
 
 @NgModule({
