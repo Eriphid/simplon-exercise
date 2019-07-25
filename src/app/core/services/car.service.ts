@@ -20,14 +20,14 @@ export class CarService {
   }
 
   createCar(car: Car) {
-    return this.http.post(this.baseUrl, car);
+    return this.http.post<Car>(this.baseUrl, car);
   }
 
   updateTask(car: Car) {
-    return this.http.put(this.baseUrl, car);
+    return this.http.put<Car>(this.baseUrl, car);
   }
 
   deleteTask(id: number) {
-    return this.http.delete(this.baseUrl + id);
+    return this.http.delete<void>(this.baseUrl + id);
   }
 }
