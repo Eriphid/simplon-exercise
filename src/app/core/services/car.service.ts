@@ -16,7 +16,7 @@ export class CarService {
   }
 
   getCar(id: number): Observable<Car> {
-    return this.http.get<Car>(this.baseUrl + '/' + id);
+    return this.http.get<Car>(this.baseUrl + id);
   }
 
   createCar(car: Car) {
@@ -28,6 +28,6 @@ export class CarService {
   }
 
   deleteTask(id: number) {
-    return this.http.delete(this.baseUrl + '/' + id);
+    return this.http.delete(this.baseUrl + id);
   }
 }
