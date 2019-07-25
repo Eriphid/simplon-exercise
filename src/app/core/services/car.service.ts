@@ -9,9 +9,25 @@ import { Car } from '@core/models/car';
 export class CarService {
   private readonly baseUrl = 'api/cars/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getCars(): Observable<Car[]> {
     return this.http.get<Car[]>(this.baseUrl);
+  }
+
+  getCar(id: number): Observable<Car> {
+    return this.http.get<Car>(this.baseUrl + '/' + id);
+  }
+
+  createCar(car: Car) {
+    return this.http.post(this.baseUrl, car);
+  }
+
+  updateTask(car: Car) {
+    return this.http.put(this.baseUrl, car);
+  }
+
+  deleteTask(id: number) {
+    return this.http.delete(this.baseUrl + '/' + id);
   }
 }
