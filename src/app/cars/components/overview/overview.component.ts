@@ -29,7 +29,7 @@ export class CarOverviewComponent implements OnInit {
     this.update();
   }
 
-  update(){
+  update() {
     this.carService.getCars().subscribe(data => { this.cars = data; this.changeDetectorRefs.markForCheck(); });
   }
 
