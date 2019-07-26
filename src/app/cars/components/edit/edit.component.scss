@@ -1,0 +1,8 @@
+@import '~@angular/material/theming';
+
+
+.form{
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: 1fr 1fr;
+}

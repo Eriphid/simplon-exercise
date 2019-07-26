@@ -1,14 +1,5 @@
 @import '~@angular/material/theming';
 
-.add{
-  background-color: #f5a623;
-  border-radius: 0;
-  padding: 0 15px;
-
-  margin-bottom: 20px;
-  @include mat-elevation(3);
-}
-
 mat-table {
   @include mat-elevation(4);
 

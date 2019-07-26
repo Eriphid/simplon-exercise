@@ -1,1 +1,35 @@
-<p>edit works!</p>
+<h1 class="mat-display-1">Update Car</h1>
+<div class="form">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput type="text" [(ngModel)]="car.name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Horse Power</mat-label>
+    <input matInput type="text" [(ngModel)]="car.horsePower">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Brand</mat-label>
+    <mat-select [(ngModel)]="car.brand">
+      <mat-option value="Renault">Renault</mat-option>
+      <mat-option value="Dacia">Dacia</mat-option>
+      <mat-option value="Alpine">Alpine</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Fuel Type</mat-label>
+    <mat-select [(ngModel)]="car.fuelType">
+      <mat-option value="Gasoline">Gasoline</mat-option>
+      <mat-option value="Electric">Electric</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Price</mat-label>
+    <input matInput type="text" [(ngModel)]="car.price">
+  </mat-form-field>
+  <div class="sales-date">
+
+  </div>
+</div>
+
+<button mat-flat-button (click)="onSave()">Save</button>
