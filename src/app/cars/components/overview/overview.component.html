@@ -1,1 +1,32 @@
-<p>overview works!</p>
+<mat-table [dataSource]="cars">
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>CAR</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{car.name}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="brand">
+    <mat-header-cell *matHeaderCellDef>BRAND</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{car.brand}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef>PRICE</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{car.price}} €</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="fuelType">
+    <mat-header-cell *matHeaderCellDef>FUEL TYPE</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{car.fuelType}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="horsePower">
+    <mat-header-cell *matHeaderCellDef>HORSER POWER</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{car.horsePower}} hp</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="startOfSales">
+    <mat-header-cell *matHeaderCellDef>START OF SALES</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{car.startOfSales}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="endOfSales">
+    <mat-header-cell *matHeaderCellDef>END OF SALES</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{car.endOfSales}}</mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="cols"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: cols"></mat-row>
+</mat-table>

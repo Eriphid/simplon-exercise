@@ -1,0 +1,22 @@
+@import '~@angular/material/theming';
+
+mat-table {
+  @include mat-elevation(4);
+
+  mat-header-row {
+    background-color: #f5a623;
+
+    .mat-header-cell{
+      font-weight: bold;
+      font-size: 0.95em;
+      color: black;
+    }
+  }
+
+  mat-row{
+    font-size: 0.9em;
+    &:nth-child(even) {
+      background-color: #eee;
+    }
+  }
+}
