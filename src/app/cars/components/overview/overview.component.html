@@ -27,6 +27,17 @@
     <mat-header-cell *matHeaderCellDef>END OF SALES</mat-header-cell>
     <mat-cell *matCellDef="let car">{{car.endOfSales}}</mat-cell>
   </ng-container>
+  <ng-container matColumnDef="actions">
+    <ng-container *matHeaderCellDef></ng-container>
+    <div class="actions" *matCellDef="let car">
+      <button mat-button [routerLink]="['/app/cars/edit', car.id]">
+        <mat-icon>create</mat-icon>
+      </button>
+      <button mat-button (click)="deleteCar(car.id)">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </div>
+  </ng-container>
   <mat-header-row *matHeaderRowDef="cols"></mat-header-row>
   <mat-row *matRowDef="let row; columns: cols"></mat-row>
 </mat-table>

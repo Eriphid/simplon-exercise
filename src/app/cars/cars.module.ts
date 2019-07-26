@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarEditComponent } from './components/edit/edit.component';
 import { CarOverviewComponent } from './components/overview/overview.component';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatIconModule, MatButtonModule } from '@angular/material';
 import { CdkColumnDef } from '@angular/cdk/table';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -13,7 +14,10 @@ import { CdkColumnDef } from '@angular/cdk/table';
   ],
   imports: [
     CommonModule,
-    MatTableModule
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterModule
   ],
   providers: [
     CdkColumnDef

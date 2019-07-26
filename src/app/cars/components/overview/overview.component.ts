@@ -17,7 +17,8 @@ export class CarOverviewComponent implements OnInit {
     'fuelType',
     'horsePower',
     'startOfSales',
-    'endOfSales'
+    'endOfSales',
+    'actions'
   ];
 
   constructor(private carService: CarService, private changeDetectorRefs: ChangeDetectorRef) {
@@ -25,7 +26,15 @@ export class CarOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.update();
+  }
+
+  update(){
     this.carService.getCars().subscribe(data => { this.cars = data; this.changeDetectorRefs.markForCheck(); });
   }
 
+
+  deleteCar(id: number) {
+    this.carService.deleteCar(id).subscribe(() => this.update());
+  }
 }

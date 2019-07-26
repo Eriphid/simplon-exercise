@@ -23,11 +23,11 @@ export class CarService {
     return this.http.post<Car>(this.baseUrl, car);
   }
 
-  updateTask(car: Car) {
+  updateCar(car: Car) {
     return this.http.put<Car>(this.baseUrl, car);
   }
 
-  deleteTask(id: number) {
+  deleteCar(id: number) {
     return this.http.delete<void>(this.baseUrl + id);
   }
 }
