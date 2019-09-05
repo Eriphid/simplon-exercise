@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import '~@angular/material/theming';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-button.mat-flat-button{
+button.mat-button.raised{
   background-color: #f5a623;
   border-radius: 0;
   padding: 0 15px;
