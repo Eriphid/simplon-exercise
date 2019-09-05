@@ -5,6 +5,7 @@ import { catchError, map, switchMap, switchAll, mergeAll } from 'rxjs/operators'
 import { CarService } from '@core/services/car.service';
 import { of, Observable, Subscriber } from 'rxjs';
 import { Action } from '@ngrx/store';
+import { Car } from '@core/models/car';
 
 @Injectable()
 export class CarEffects {
@@ -30,8 +31,9 @@ export class CarEffects {
   @Effect()
   UpdateCar = this.actions$.pipe(
     ofType(fromCarActions.ActionTypes.UpdateCar),
-    switchMap((action: fromCarActions.UpdateCar) => this.carService.updateCar(action.car)),
-    map(() => new fromCarActions.UpdateCarSuccess()),
+    switchMap((action: fromCarActions.UpdateCar) => this.carService.updateCar(action.car).pipe(
+      map(() => new fromCarActions.UpdateCarSuccess(action.car))
+    )),
     catchError(error => of(new fromCarActions.UpdateCarFailed(error)))
   );
 
@@ -39,7 +41,7 @@ export class CarEffects {
   CreateCar = this.actions$.pipe(
     ofType(fromCarActions.ActionTypes.CreateCar),
     switchMap((action: fromCarActions.CreateCar) => this.carService.createCar(action.car)),
-    map(() => new fromCarActions.CreateCarSuccess()),
+    map(car => new fromCarActions.CreateCarSuccess(car)),
     catchError(error => of(new fromCarActions.CreateCarFailed(error)))
   );
 

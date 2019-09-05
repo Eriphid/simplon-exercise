@@ -36,10 +36,18 @@ export type Actions =
   | LoadCars
   | LoadCarsSuccess
   | LoadCarsFailed
-  | DeleteCarSuccess;
+  | DeleteCar
+  | UpdateCar
+  | CreateCar
+  | DeleteCarSuccess
+  | UpdateCarSuccess
+  | CreateCarSuccess
+  | DeleteCarFailed
+  | UpdateCarFailed
+  | CreateCarFailed;
 
 export class DeleteCar implements Action {
-  readonly type: string = ActionTypes.DeleteCar;
+  readonly type = ActionTypes.DeleteCar;
   id: number;
   constructor(id: number | Car) {
     if (typeof id === 'number') {
@@ -70,6 +78,7 @@ export class UpdateCar implements Action {
 
 export class UpdateCarSuccess implements Action {
   readonly type = ActionTypes.UpdateCarSuccess;
+  constructor(public car: Car) { }
 }
 
 export class UpdateCarFailed implements Action {
@@ -84,6 +93,7 @@ export class CreateCar implements Action {
 
 export class CreateCarSuccess implements Action {
   readonly type = ActionTypes.CreateCarSuccess;
+  constructor(public car: Car) { }
 }
 
 export class CreateCarFailed implements Action {

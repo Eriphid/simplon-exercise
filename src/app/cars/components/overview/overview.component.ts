@@ -29,20 +29,11 @@ export class CarOverviewComponent implements OnInit {
   constructor(private store: Store<State>, private router: Router, private changeDetectorRefs: ChangeDetectorRef) {
     this.cars$ = store.select('cars');
     store.dispatch(new LoadCars());
-    // this.cars$.subscribe(e => console.log(e));
   }
 
-  ngOnInit() {
-    this.update();
-  }
-
-  update() {
-    // this.carService.getCars().subscribe(data => { this.cars = data; this.changeDetectorRefs.markForCheck(); });
-  }
-
+  ngOnInit() {  }
 
   deleteCar(id: number) {
-    // this.carService.deleteCar(id).subscribe(() => this.update());
     this.store.dispatch(new DeleteCar(id));
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Car } from '@core/models/car';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class CarService {
   }
 
   updateCar(car: Car) {
-    return this.http.put<Car>(this.baseUrl, car);
+    return this.http.put<void>(this.baseUrl, car);
   }
 
   deleteCar(id: number) {

@@ -1,19 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { CarService } from '@core/services/car.service';
+import { Component, OnInit } from '@angular/core';
 import { Car } from '@core/models/car';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { State as CarsState } from '@core/store/reducers/car.reducer';
-import { UpdateCar, LoadCars, CreateCar } from '@core/store/actions/car.actions';
-import { Observable, of } from 'rxjs';
+import { UpdateCar, CreateCar } from '@core/store/actions/car.actions';
 import { State } from '@core/store';
-import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./edit.component.scss']
 })
 export class CarEditComponent implements OnInit {
   createNew = false;
@@ -22,8 +17,7 @@ export class CarEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<State>,
-    private changeDetector: ChangeDetectorRef
+    private store: Store<State>
   ) { }
 
   ngOnInit() {
@@ -37,7 +31,6 @@ export class CarEditComponent implements OnInit {
           return state.cars.list.find(car => car.id === id);
         }).subscribe(car => {
           this.car = { ...car };
-          this.changeDetector.detectChanges();
         });
       }
     });

@@ -16,11 +16,21 @@ export function reducer(state = initialState, action: fromCarActions.Actions): S
         ...state,
         list: action.cars
       };
-      case fromCarActions.ActionTypes.DeleteCarSuccess:
-        return {
-          ...state,
-          list: state.list.filter(car => car.id !== action.id)
-        };
+    case fromCarActions.ActionTypes.DeleteCarSuccess:
+      return {
+        ...state,
+        list: state.list.filter(car => car.id !== action.id)
+      };
+    case fromCarActions.ActionTypes.UpdateCarSuccess:
+      return {
+        ...state,
+        list: state.list.map(car => car.id === action.car.id ? action.car : car)
+      };
+    case fromCarActions.ActionTypes.CreateCarSuccess:
+      return {
+        ...state,
+        list: [...state.list, action.car]
+      };
     default:
       return state;
   }
