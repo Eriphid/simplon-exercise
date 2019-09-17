@@ -6,3 +6,22 @@
   grid-gap: 50px;
   grid-template-columns: 1fr 1fr;
 }
+
+[matsuffix]{
+  font-size: 0.9em;
+  color: #555;
+}
+
+.sales-date-group{
+  display: flex;
+  flex-direction: row;
+  mat-form-field{
+    margin:5px;
+    &:first-child{
+      margin-left: 0;
+    }
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+}

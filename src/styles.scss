@@ -1,7 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import '~@angular/material/theming';
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+$mat-yellow: (
+  50: #f5a623,
+  100: #f5a623,
+  200: #f5a623,
+  300: #f5a623,
+  400: #f5a623,
+  500: #f5a623,
+  600: #f5a623,
+  700: #f5a623,
+  800: #f5a623,
+  900: #f5a623,
+  A100: #f5a623,
+  A200: #f5a623,
+  A400: #f5a623,
+  A700: #f5a623,
+  contrast: (
+    50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+@include mat-core();
+$primary: mat-palette($mat-yellow);
+$theme: mat-light-theme($primary, $primary, $primary);
+@include angular-material-theme($theme);
 
 button.mat-button.raised{
   background-color: #f5a623;

@@ -3,17 +3,30 @@ import * as fromCarActions from '@core/store/actions/car.actions';
 
 export interface State {
   list: Car[];
+  loading: boolean;
 }
 
 export const initialState: State = {
-  list: []
+  list: [],
+  loading: false
 };
 
 export function reducer(state = initialState, action: fromCarActions.Actions): State {
   switch (action.type) {
+    case fromCarActions.ActionTypes.LoadCars:
+      return {
+        ...state,
+        loading: true
+      }
+    case fromCarActions.ActionTypes.CreateCarFailed:
+      return {
+        ...state,
+        loading: false
+      }
     case fromCarActions.ActionTypes.LoadCarsSuccess:
       return {
         ...state,
+        loading: false,
         list: action.cars
       };
     case fromCarActions.ActionTypes.DeleteCarSuccess:
