@@ -28,13 +28,13 @@ export class CarEditComponent implements OnInit {
 
   ngOnInit() {
     const editComponent = this;
+    let id: number;
     this.route.params.subscribe(params => {
       if (params.id === 'new') {
         this.createNew = true;
         this.car = {} as Car;
-      } else {
+      } else if ((id = parseInt(params.id)) > 0 && !/[^0-9]+/.test(params.id)) {
         this.store.select(state => {
-          const id = parseInt(params.id, 10);
           const list = state.cars.list;
           if (list.length === 0) {
             if (!state.cars.loading) {
@@ -56,6 +56,8 @@ export class CarEditComponent implements OnInit {
             editComponent.error = e || "An unknown error has occured";
           }
         });
+      } else {
+        editComponent.error = "Invalid URL";
       }
     });
   }
