@@ -3,6 +3,10 @@
 mat-table {
   @include mat-elevation(4);
 
+  .action-header, .action-cell {
+    flex: 0 0 50px;
+  }
+
   mat-header-row {
     background-color: #f5a623;
 
@@ -21,7 +25,6 @@ mat-table {
     }
 
     .actions{
-      position: absolute;
       height: 100%;
       right: 20px;
       display: flex;

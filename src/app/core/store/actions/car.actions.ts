@@ -5,6 +5,9 @@ export enum ActionTypes {
   LoadCars = '[Cars] Get cars from API',
   LoadCarsSuccess = '[Cars] Get cars from API Success',
   LoadCarsFailed = '[Cars] Get cars from API Failed',
+  LoadCar = '[Cars] Get car from API',
+  LoadCarSuccess = '[Cars] Get car from API Success',
+  LoadCarFailed = '[Cars] Get car from API Failed',
   DeleteCar = '[Cars] Delete a car from API',
   DeleteCarSuccess = '[Cars] Delete a car from API Success',
   DeleteCarFailed = '[Cars] Delete a car from API Failed',
@@ -31,11 +34,30 @@ export class LoadCarsFailed implements Action {
 
   constructor(public error: any) { }
 }
+export class LoadCar implements Action {
+  readonly type = ActionTypes.LoadCar;
+  constructor(public id: number) { }
+}
+
+export class LoadCarSuccess implements Action {
+  readonly type = ActionTypes.LoadCarSuccess;
+
+  constructor(public selectedCar: Car) { }
+}
+
+export class LoadCarFailed implements Action {
+  readonly type = ActionTypes.LoadCarFailed;
+
+  constructor(public error: any) { }
+}
 
 export type Actions =
   | LoadCars
   | LoadCarsSuccess
   | LoadCarsFailed
+  | LoadCar
+  | LoadCarSuccess
+  | LoadCarFailed
   | DeleteCar
   | UpdateCar
   | CreateCar

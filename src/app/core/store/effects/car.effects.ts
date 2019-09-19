@@ -15,9 +15,18 @@ export class CarEffects {
     .pipe(
       ofType(fromCarActions.ActionTypes.LoadCars),
       switchMap(() => this.carService.getCars()),
-      map((cars) => new fromCarActions.LoadCarsSuccess(cars)),
+      map(cars => new fromCarActions.LoadCarsSuccess(cars)),
       catchError((error) => of(new fromCarActions.LoadCarsFailed(error)))
     );
+
+  @Effect()
+  LoadCar$ = this.actions$
+    .pipe(
+      ofType(fromCarActions.ActionTypes.LoadCar),
+      switchMap((action: fromCarActions.LoadCar) => this.carService.getCar(action.id)),
+      map(car => new fromCarActions.LoadCarSuccess(car)),
+      catchError(error => of(new fromCarActions.LoadCarFailed(error)))
+    )
 
   @Effect()
   DeleteCars$ = this.actions$.pipe(

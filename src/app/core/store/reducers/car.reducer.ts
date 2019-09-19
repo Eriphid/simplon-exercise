@@ -4,11 +4,12 @@ import * as fromCarActions from '@core/store/actions/car.actions';
 export interface State {
   list: Car[];
   loading: boolean;
+  selected?: Car;
 }
 
 export const initialState: State = {
   list: [],
-  loading: false
+  loading: false,
 };
 
 export function reducer(state = initialState, action: fromCarActions.Actions): State {
@@ -44,6 +45,16 @@ export function reducer(state = initialState, action: fromCarActions.Actions): S
         ...state,
         list: [...state.list, action.car]
       };
+    case fromCarActions.ActionTypes.LoadCar:
+      return {
+        ...state,
+        selected: undefined
+      }
+    case fromCarActions.ActionTypes.LoadCarSuccess:
+      return {
+        ...state,
+        selected: action.selectedCar
+      }
     default:
       return state;
   }

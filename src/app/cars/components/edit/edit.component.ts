@@ -1,13 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Car } from '@core/models/car';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { UpdateCar, CreateCar, LoadCars } from '@core/store/actions/car.actions';
+import { UpdateCar, CreateCar, LoadCars, LoadCar } from '@core/store/actions/car.actions';
 import { State } from '@core/store';
 import { Brand } from "@core/models/brand";
 import { FuelType } from "@core/models/fuel-type";
 import { stringifyDate } from 'app/cars/shared/date.adapter';
-
+import { carSelector } from "@core/store/selectors/car.selectors";
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -23,41 +23,23 @@ export class CarEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<State>
+    private store: Store<State>,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    const editComponent = this;
-    let id: number;
     this.route.params.subscribe(params => {
       if (params.id === 'new') {
         this.createNew = true;
         this.car = {} as Car;
-      } else if ((id = parseInt(params.id)) > 0 && !/[^0-9]+/.test(params.id)) {
-        this.store.select(state => {
-          const list = state.cars.list;
-          if (list.length === 0) {
-            if (!state.cars.loading) {
-              this.store.dispatch(new LoadCars());
-            }
-            return null;
-          } else {
-            return list.find(car => car.id === id);
-          }
-        }).subscribe({
-          next(car) {
-            if (car === null) {
-              editComponent.error = `Car id "${params.id}" does not exist`;
-            } else if (car) {
-              editComponent.car = { ...car };
-            }
-          },
-          error(e) {
-            editComponent.error = e || "An unknown error has occured";
+      } else {
+        this.store.dispatch(new LoadCar(params.id));
+        this.store.select(carSelector).subscribe(car => {
+          if (car) {
+            this.car = { ...car };
+            this.cd.markForCheck();
           }
         });
-      } else {
-        editComponent.error = "Invalid URL";
       }
     });
   }
