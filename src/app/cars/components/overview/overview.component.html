@@ -1,35 +1,35 @@
 <button class="raised" mat-button (click)="createCar()">
-  <mat-icon>add</mat-icon> Add Car
+  <mat-icon>add</mat-icon> {{'form.overview.add' | translate}}
 </button>
 
 <mat-table [dataSource]="(cars$ | async).list">
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef>CAR</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate>car.name</mat-header-cell>
     <mat-cell *matCellDef="let car">{{car.name}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="brand">
-    <mat-header-cell *matHeaderCellDef>BRAND</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate>car.brand</mat-header-cell>
     <mat-cell *matCellDef="let car">{{car.brand}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="price">
-    <mat-header-cell *matHeaderCellDef>PRICE</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef translate>car.price</mat-header-cell>
     <mat-cell *matCellDef="let car">{{car.price}} €</mat-cell>
   </ng-container>
   <ng-container matColumnDef="fuelType">
-    <mat-header-cell *matHeaderCellDef>FUEL TYPE</mat-header-cell>
-    <mat-cell *matCellDef="let car">{{car.fuelType}}</mat-cell>
+    <mat-header-cell *matHeaderCellDef translate>car.fuelType</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{ 'fuel.' + car.fuelType | translate }}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="horsePower">
-    <mat-header-cell *matHeaderCellDef>HORSE POWER</mat-header-cell>
-    <mat-cell *matCellDef="let car">{{car.horsePower}} hp</mat-cell>
+    <mat-header-cell *matHeaderCellDef translate>car.horsePower</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{car.horsePower}} {{'unit.hp' | translate}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="startOfSales">
-    <mat-header-cell *matHeaderCellDef>START OF SALES</mat-header-cell>
-    <mat-cell *matCellDef="let car">{{car.startOfSales}}</mat-cell>
+    <mat-header-cell *matHeaderCellDef translate>car.startOfSales</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{formatDate(car.startOfSales)}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="endOfSales">
-    <mat-header-cell *matHeaderCellDef>END OF SALES</mat-header-cell>
-    <mat-cell *matCellDef="let car">{{car.endOfSales}}</mat-cell>
+    <mat-header-cell *matHeaderCellDef translate>car.endOfSales</mat-header-cell>
+    <mat-cell *matCellDef="let car">{{formatDate(car.endOfSales)}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef class="action-header"></mat-header-cell>

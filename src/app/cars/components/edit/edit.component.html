@@ -9,15 +9,20 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label translate>car.horsePower</mat-label>
+    <span matSuffix translate>unit.hp</span>
     <input matInput type="text" formControlName="horsePower">
   </mat-form-field>
   <mat-form-field>
     <mat-label translate>car.brand</mat-label>
-    <input matInput type="text" formControlName="brand">
+    <mat-select formControlName="brand">
+      <mat-option *ngFor="let brand of brands | keyvalue" [value]="brand.value">{{ brand.value }}</mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-label translate>car.fuelType</mat-label>
-    <input matInput type="text" formControlName="fuelType">
+    <mat-select formControlName="fuelType">
+      <mat-option *ngFor="let fuel of fuelType | keyvalue" [value]="fuel.value">{{'fuel.' + fuel.value | translate}}</mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-label translate>car.price</mat-label>

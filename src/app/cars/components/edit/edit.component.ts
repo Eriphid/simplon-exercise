@@ -10,6 +10,7 @@ import { carSelector } from "@core/store/selectors/car.selectors";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import moment from "moment";
 import { TranslateService } from '@ngx-translate/core';
+import { DateAdapter } from '@angular/material';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -29,15 +30,16 @@ export class CarEditComponent implements OnInit {
     private store: Store<State>,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dateAdapter: DateAdapter<Date>
   ) {
     // translate.setDefaultLang("en");
-    const lang = translate.getBrowserLang();
-    if (/fr|en/.test(lang)) {
-      translate.use(lang);
-    } else {
-      translate.use("en");
+    let lang = translate.getBrowserLang();
+    if (!/fr|en/.test(lang)) {
+      lang = 'en';
     }
+    translate.use(lang);
+    dateAdapter.setLocale(lang);
   }
 
   private createForm(car: Car) {

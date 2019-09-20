@@ -12,9 +12,22 @@
         "edit": {
             "title": "Modifer la voiture"
         },
+        "overview": {
+            "add": "Ajouter une voiture"
+        },
         "actions": {
             "create": "Créer",
             "update": "Mettre à jour"
         }
-    }
+    },
+    "fuel": {
+        "Gasoline": "Gasoline",
+        "Diesel": "Diesel",
+        "LPG": "LPG",
+        "Electric": "Electrique"
+    },
+    "unit": {
+        "hp": "cv"
+    },
+    "dateformat": "DD-MM-YYYY"
 }

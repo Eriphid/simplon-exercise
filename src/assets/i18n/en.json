@@ -10,11 +10,24 @@
     },
     "form": {
         "edit": {
-            "title": "Edit car"
+            "title": "Edit Car"
+        },
+        "overview": {
+            "add": "Add Car"
         },
         "actions": {
             "create": "Create",
             "update": "Update"
         }
-    }
+    },
+    "fuel": {
+        "Gasoline": "Gasoline",
+        "Diesel": "Diesel",
+        "LPG": "LPG",
+        "Electric": "Electric"
+    },
+    "unit": {
+        "hp": "hp"
+    },
+    "dateformat": "YYYY-MM-DD"
 }
