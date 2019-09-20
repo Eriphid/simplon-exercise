@@ -1,59 +1,39 @@
 <h1 class="mat-display-1">
-  <ng-container *ngIf="createNew; else update">
-    Create
-  </ng-container>
-  <ng-template #update>
-    Update
-  </ng-template>
-  Car
+  {{actionName()}} Car
 </h1>
-<ng-container *ngIf="error; else edit">
-  {{error}}
-</ng-container>
-<ng-template #edit>
-  <ng-container *ngIf="car">
-    <div class="form">
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput type="text" [(ngModel)]="car.name">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Horse Power</mat-label>
-        <input matInput type="text" [(ngModel)]="car.horsePower">
-        <span matSuffix>hp</span>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Brand</mat-label>
-        <mat-select [(ngModel)]="car.brand">
-          <mat-option *ngFor="let brand of brands | keyvalue" [value]="brand.value">{{brand.key}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Fuel Type</mat-label>
-        <mat-select [(ngModel)]="car.fuelType">
-          <mat-option *ngFor="let fuel of fuelType | keyvalue" [value]="fuel.value">{{fuel.key}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Price</mat-label>
-        <input matInput type="text" [(ngModel)]="car.price">
-      </mat-form-field>
-      <div class="sales-date-group">
-        <mat-form-field class="sales-date">
-          <mat-label>Start Date</mat-label>
-          <input matInput [matDatepicker]="startDate" (ngModelChange)="onDateChange('startOfSales', $event)" [ngModel]="car.startOfSales | datify">
-          <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-          <mat-datepicker #startDate></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field class="sales-date">
-          <mat-label>End Date</mat-label>
-          <input matInput [matDatepicker]="endDate" (ngModelChange)="onDateChange('endOfSales', $event)" [ngModel]="car.endOfSales | datify">
-          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-          <mat-datepicker #endDate></mat-datepicker>
-        </mat-form-field>
-      </div>
-    </div>
 
-    <button class="raised" mat-button (click)="onSave()">Save</button>
-  </ng-container>
-</ng-template>
+<form *ngIf="form" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <mat-form-field>
+    <mat-label>name</mat-label>
+    <input matInput type="text" formControlName="name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>horsePower</mat-label>
+    <input matInput type="text" formControlName="horsePower">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>brand</mat-label>
+    <input matInput type="text" formControlName="brand">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>fuelType</mat-label>
+    <input matInput type="text" formControlName="fuelType">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>price</mat-label>
+    <input matInput type="text" formControlName="price">
+  </mat-form-field>
+  <div class="sales-date-group">
+    <mat-form-field>
+      <input matInput [matDatepicker]="sos" [required]="form.value.endOfSales && form.value.endOfSales  !== ''" formControlName="startOfSales">
+      <mat-datepicker-toggle matSuffix [for]="sos"></mat-datepicker-toggle>
+      <mat-datepicker #sos></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="eos" [required]="form.value.startOfSales && form.value.startOfSales  !== ''" formControlName="endOfSales">
+      <mat-datepicker-toggle matSuffix [for]="eos"></mat-datepicker-toggle>
+      <mat-datepicker #eos></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <button [disabled]="!form.valid" class="raised" mat-button type="submit">{{actionName()}}</button>
+</form>

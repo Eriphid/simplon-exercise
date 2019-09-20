@@ -6,8 +6,9 @@ import { UpdateCar, CreateCar, LoadCars, LoadCar } from '@core/store/actions/car
 import { State } from '@core/store';
 import { Brand } from "@core/models/brand";
 import { FuelType } from "@core/models/fuel-type";
-import { stringifyDate } from 'app/cars/shared/date.adapter';
 import { carSelector } from "@core/store/selectors/car.selectors";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import moment from "moment";
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -15,28 +16,44 @@ import { carSelector } from "@core/store/selectors/car.selectors";
 })
 export class CarEditComponent implements OnInit {
   createNew = false;
-  car: Car;
   error: string = null;
   brands = Brand;
   fuelType = FuelType;
+  form: FormGroup;
+  id: number;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<State>,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private fb: FormBuilder
   ) { }
+
+  private createForm(car: Car) {
+    return this.fb.group({
+      name: [car.name, Validators.required],
+      horsePower: [car.horsePower, Validators.required],
+      brand: [car.brand, Validators.required],
+      fuelType: [car.fuelType, Validators.required],
+      price: [car.price],
+      startOfSales: [car.startOfSales],
+      endOfSales: [car.endOfSales]
+    })
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       if (params.id === 'new') {
         this.createNew = true;
-        this.car = {} as Car;
+        this.form = this.createForm({} as Car);
+        this.id = null;
       } else {
         this.store.dispatch(new LoadCar(params.id));
         this.store.select(carSelector).subscribe(car => {
           if (car) {
-            this.car = { ...car };
+            this.form = this.createForm(car);
+            this.id = car.id;
             this.cd.markForCheck();
           }
         });
@@ -44,17 +61,23 @@ export class CarEditComponent implements OnInit {
     });
   }
 
+  carFromForm(value: FormGroup["value"]) {
+    return {
+      ...value,
+      id: this.id,
+      startOfSales: moment(value.startOfSales).format("YYYY-MM-DD"),
+      endOfSales: moment(value.endOfSales).format("YYYY-MM-DD")
+    }
+  }
 
-  onSave() {
+  onSubmit() {
     if (this.createNew) {
-      this.store.dispatch(new CreateCar(this.car));
+      this.store.dispatch(new CreateCar(this.carFromForm(this.form.value)));
     } else {
-      this.store.dispatch(new UpdateCar(this.car));
+      this.store.dispatch(new UpdateCar(this.carFromForm(this.form.value)));
     }
     this.router.navigateByUrl('/app/cars/overview');
   }
 
-  onDateChange(key: string, date: Date) {
-    this.car[key] = stringifyDate(date);
-  }
+  actionName() { return this.createNew ? "Create" : "Update"; }
 }

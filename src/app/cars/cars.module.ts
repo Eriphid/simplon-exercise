@@ -6,15 +6,12 @@ import { MatTableModule, MatIconModule, MatButtonModule, MatFormFieldModule, Mat
 import { CdkColumnDef } from '@angular/cdk/table';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
-import { DatifyPipe } from './pipes/datify.pipe';
-import { AppDateAdapter } from './shared/date.adapter';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     CarEditComponent,
-    CarOverviewComponent,
-    DatifyPipe
+    CarOverviewComponent
   ],
   imports: [
     CommonModule,
@@ -26,13 +23,13 @@ import { AppDateAdapter } from './shared/date.adapter';
     MatSelectModule,
     RouterModule,
     BrowserAnimationsModule,
-    FormsModule,
+    ReactiveFormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    FormsModule
   ],
   providers: [
-    CdkColumnDef,
-    { provide: DateAdapter, useClass: AppDateAdapter }
+    CdkColumnDef
   ]
 })
 export class CarsModule { }
