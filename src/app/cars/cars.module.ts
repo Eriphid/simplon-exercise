@@ -7,6 +7,10 @@ import { CdkColumnDef } from '@angular/cdk/table';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AppDateAdapter } from './shared/date.adapter';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpLoaderFactory } from '@core/core.module';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,10 +30,21 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
-    CdkColumnDef
+    CdkColumnDef,
+    { provide: DateAdapter, useClass: AppDateAdapter }
+  ],
+  exports: [
+    TranslateModule
   ]
 })
 export class CarsModule { }

@@ -1,0 +1,20 @@
+{
+    "car": {
+        "name": "Nom",
+        "brand": "Marque",
+        "fuelType": "Type d'essence",
+        "price": "Prix",
+        "horsePower": "Chevaux",
+        "endOfSales": "End of sales",
+        "startOfSales": "Start of sales"
+    },
+    "form": {
+        "edit": {
+            "title": "Modifer la voiture"
+        },
+        "actions": {
+            "create": "Créer",
+            "update": "Mettre à jour"
+        }
+    }
+}

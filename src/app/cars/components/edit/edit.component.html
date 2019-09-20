@@ -1,26 +1,26 @@
-<h1 class="mat-display-1">
-  {{actionName()}} Car
+<h1 translate class="mat-display-1">
+  form.edit.title
 </h1>
 
 <form *ngIf="form" (ngSubmit)="onSubmit()" [formGroup]="form">
   <mat-form-field>
-    <mat-label>name</mat-label>
+    <mat-label translate>car.name</mat-label>
     <input matInput type="text" formControlName="name">
   </mat-form-field>
   <mat-form-field>
-    <mat-label>horsePower</mat-label>
+    <mat-label translate>car.horsePower</mat-label>
     <input matInput type="text" formControlName="horsePower">
   </mat-form-field>
   <mat-form-field>
-    <mat-label>brand</mat-label>
+    <mat-label translate>car.brand</mat-label>
     <input matInput type="text" formControlName="brand">
   </mat-form-field>
   <mat-form-field>
-    <mat-label>fuelType</mat-label>
+    <mat-label translate>car.fuelType</mat-label>
     <input matInput type="text" formControlName="fuelType">
   </mat-form-field>
   <mat-form-field>
-    <mat-label>price</mat-label>
+    <mat-label translate>car.price</mat-label>
     <input matInput type="text" formControlName="price">
   </mat-form-field>
   <div class="sales-date-group">
@@ -35,5 +35,5 @@
       <mat-datepicker #eos></mat-datepicker>
     </mat-form-field>
   </div>
-  <button [disabled]="!form.valid" class="raised" mat-button type="submit">{{actionName()}}</button>
+  <button [disabled]="!form.valid" class="raised" mat-button type="submit">{{actionName() | async}}</button>
 </form>

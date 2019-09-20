@@ -1,0 +1,20 @@
+{
+    "car": {
+        "name": "Name",
+        "brand": "Brand",
+        "fuelType": "Fuel type",
+        "price": "Price",
+        "horsePower": "Horse power",
+        "endOfSales": "End of sales",
+        "startOfSales": "Start of sales"
+    },
+    "form": {
+        "edit": {
+            "title": "Edit car"
+        },
+        "actions": {
+            "create": "Create",
+            "update": "Update"
+        }
+    }
+}

@@ -9,6 +9,7 @@ import { FuelType } from "@core/models/fuel-type";
 import { carSelector } from "@core/store/selectors/car.selectors";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import moment from "moment";
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -27,8 +28,17 @@ export class CarEditComponent implements OnInit {
     private router: Router,
     private store: Store<State>,
     private cd: ChangeDetectorRef,
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private translate: TranslateService
+  ) {
+    // translate.setDefaultLang("en");
+    const lang = translate.getBrowserLang();
+    if (/fr|en/.test(lang)) {
+      translate.use(lang);
+    } else {
+      translate.use("en");
+    }
+  }
 
   private createForm(car: Car) {
     return this.fb.group({
@@ -79,5 +89,8 @@ export class CarEditComponent implements OnInit {
     this.router.navigateByUrl('/app/cars/overview');
   }
 
-  actionName() { return this.createNew ? "Create" : "Update"; }
+  actionName() {
+    const action = this.createNew ? "create" : "update";
+    return this.translate.get(`form.actions.${action}`);
+  }
 }
