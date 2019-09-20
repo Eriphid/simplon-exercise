@@ -5,8 +5,8 @@
         "fuelType": "Fuel type",
         "price": "Price",
         "horsePower": "Horse power",
-        "endOfSales": "End of sales",
-        "startOfSales": "Start of sales"
+        "startOfSales": "Start of sales",
+        "endOfSales": "End of sales"
     },
     "form": {
         "edit": {
