@@ -25,11 +25,13 @@
   </mat-form-field>
   <div class="sales-date-group">
     <mat-form-field>
+      <mat-label translate>car.startOfSales</mat-label>
       <input matInput [matDatepicker]="sos" [required]="form.value.endOfSales && form.value.endOfSales  !== ''" formControlName="startOfSales">
       <mat-datepicker-toggle matSuffix [for]="sos"></mat-datepicker-toggle>
       <mat-datepicker #sos></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
+      <mat-label translate>car.endOfSales</mat-label>
       <input matInput [matDatepicker]="eos" [required]="form.value.startOfSales && form.value.startOfSales  !== ''" formControlName="endOfSales">
       <mat-datepicker-toggle matSuffix [for]="eos"></mat-datepicker-toggle>
       <mat-datepicker #eos></mat-datepicker>
