@@ -7,10 +7,11 @@ import { State } from '@core/store';
 import { Brand } from "@core/models/brand";
 import { FuelType } from "@core/models/fuel-type";
 import { carSelector } from "@core/store/selectors/car.selectors";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import moment from "moment";
 import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material';
+import { languageSelector } from '@core/store/selectors/language.selectors';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -30,20 +31,14 @@ export class CarEditComponent implements OnInit {
     private store: Store<State>,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
-    private translate: TranslateService,
     private dateAdapter: DateAdapter<Date>
   ) {
-    // translate.setDefaultLang("en");
-    let lang = translate.getBrowserLang();
-    if (!/fr|en/.test(lang)) {
-      lang = 'en';
-    }
-    translate.use(lang);
-    dateAdapter.setLocale(lang);
+    store.select(languageSelector).subscribe(lang => dateAdapter.setLocale(lang));
   }
 
   private createForm(car: Car) {
-    return this.fb.group({
+    
+    const form = this.fb.group({
       name: [car.name, Validators.required],
       horsePower: [car.horsePower, Validators.required],
       brand: [car.brand, Validators.required],
@@ -51,7 +46,22 @@ export class CarEditComponent implements OnInit {
       price: [car.price],
       startOfSales: [car.startOfSales],
       endOfSales: [car.endOfSales]
-    })
+    });
+    
+    const sos = form.get("startOfSales");
+    const eos = form.get("endOfSales");
+    
+    const salesDateValidator = (control: FormControl) => {
+      return Boolean(sos.value) === Boolean(eos.value) ? null : { 
+        "required": control.toString() + " is required"
+      }
+    }
+    sos.setValidators(salesDateValidator);
+    eos.setValidators(salesDateValidator);
+    // sos.valueChanges.subscribe(value => eos.setValidators(value ? Validators.required : null));
+    // eos.valueChanges.subscribe(value => sos.setValidators(value ? Validators.required : null));
+
+    return form;
   }
 
   ngOnInit() {

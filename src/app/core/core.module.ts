@@ -11,6 +11,7 @@ import * as fromCore from '@core/store';
 import { CarEffects } from '@core/store/effects/car.effects';
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LanguageEffects } from './store/effects/language.effects';
 
 @NgModule({
   declarations: [],
@@ -19,7 +20,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryCarService, { passThruUnknownUrl: true }),
     StoreModule.forRoot(fromCore.reducers, { runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true } }),
-    EffectsModule.forRoot([CarEffects]),
+    EffectsModule.forRoot([
+      CarEffects,
+      LanguageEffects
+    ]),
     StoreDevtoolsModule.instrument({
       name: 'Simplon Exercise',
       maxAge: 50

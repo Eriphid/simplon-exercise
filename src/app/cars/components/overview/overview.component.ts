@@ -58,6 +58,6 @@ export class CarOverviewComponent implements OnInit {
   }
 
   formatDate(date: string) {
-    return moment(date).format('L');
+    return moment(date, "YYYY-MM-DD").format('L');
   }
 }
