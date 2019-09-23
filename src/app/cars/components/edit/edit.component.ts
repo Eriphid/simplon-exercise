@@ -31,6 +31,7 @@ export class CarEditComponent implements OnInit {
     private store: Store<State>,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
+    private translate: TranslateService,
     private dateAdapter: DateAdapter<Date>
   ) {
     store.select(languageSelector).subscribe(lang => dateAdapter.setLocale(lang));

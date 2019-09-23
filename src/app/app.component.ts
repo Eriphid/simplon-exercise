@@ -21,10 +21,10 @@ export class AppComponent implements OnInit {
     const langKey = 'language';
     const storedLanguage = localStorage.getItem(langKey);
     if (storedLanguage) {
-      store.dispatch(new ChangeLanguage(storedLanguage));
+      store.dispatch(new ChangeLanguage(storedLanguage as Language));
     } else {
-      const browserLang = translate.getBrowserLang();
-      if (Object.values(Language).includes(browserLang as Language)) {
+      const browserLang = translate.getBrowserLang() as Language;
+      if (Object.values(Language).includes(browserLang)) {
         store.dispatch(new ChangeLanguage(browserLang));
       }
     }

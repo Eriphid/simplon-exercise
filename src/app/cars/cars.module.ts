@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarEditComponent } from './components/edit/edit.component';
 import { CarOverviewComponent } from './components/overview/overview.component';
-import { MatTableModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
+import { MatTableModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, DateAdapter, MatSortModule } from '@angular/material';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,6 +30,7 @@ import { HttpClient } from '@angular/common/http';
     MatDatepickerModule,
     MatNativeDateModule,
     FormsModule,
+    MatSortModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

@@ -29,5 +29,5 @@
     "unit": {
         "hp": "cv"
     },
-    "dateformat": "DD-MM-YYYY"
+    "dateformat": "DD/MM/YYYY"
 }

@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromLanguageActions from '@core/store/actions/language.actions';
-import { catchError, map, switchMap, switchAll, mergeAll, tap } from 'rxjs/operators';
-import { CarService } from '@core/services/car.service';
-import { of, Observable, Subscriber } from 'rxjs';
-import { Action } from '@ngrx/store';
-import { Car } from '@core/models/car';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()

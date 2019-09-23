@@ -2,33 +2,33 @@
   <mat-icon>add</mat-icon> {{'form.overview.add' | translate}}
 </button>
 
-<mat-table [dataSource]="(cars$ | async).list">
+<mat-table matSort (matSortChange)="updateSortedCars($event)" [dataSource]="sortedCars$ | async">
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef translate>car.name</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header="name">{{'car.name' | translate}}</mat-header-cell>
     <mat-cell *matCellDef="let car">{{car.name}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="brand">
-    <mat-header-cell *matHeaderCellDef translate>car.brand</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header="brand">{{'car.brand' | translate}}</mat-header-cell>
     <mat-cell *matCellDef="let car">{{car.brand}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="price">
-    <mat-header-cell *matHeaderCellDef translate>car.price</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header="price">{{'car.price' | translate}}</mat-header-cell>
     <mat-cell *matCellDef="let car">{{car.price}} €</mat-cell>
   </ng-container>
   <ng-container matColumnDef="fuelType">
-    <mat-header-cell *matHeaderCellDef translate>car.fuelType</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header="fuelType">{{'car.fuelType' | translate}}</mat-header-cell>
     <mat-cell *matCellDef="let car">{{ 'fuel.' + car.fuelType | translate }}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="horsePower">
-    <mat-header-cell *matHeaderCellDef translate>car.horsePower</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header="horsePower">{{'car.horsePower' | translate}}</mat-header-cell>
     <mat-cell *matCellDef="let car">{{car.horsePower}} {{'unit.hp' | translate}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="startOfSales">
-    <mat-header-cell *matHeaderCellDef translate>car.startOfSales</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header="startOfSales">{{'car.startOfSales' | translate}}</mat-header-cell>
     <mat-cell *matCellDef="let car">{{formatDate(car.startOfSales)}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="endOfSales">
-    <mat-header-cell *matHeaderCellDef translate>car.endOfSales</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header="endOfSales">{{'car.endOfSales' | translate}}</mat-header-cell>
     <mat-cell *matCellDef="let car">{{formatDate(car.endOfSales)}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="actions">
@@ -44,6 +44,6 @@
       </div>
     </mat-cell>
   </ng-container>
-  <mat-header-row *matHeaderRowDef="cols"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: cols"></mat-row>
+  <mat-header-row *matHeaderRowDef="colNames"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: colNames"></mat-row>
 </mat-table>
