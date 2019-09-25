@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromCarActions from '@core/store/actions/car.actions';
-import { catchError, map, switchMap, switchAll, mergeAll } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { CarService } from '@core/services/car.service';
-import { of, Observable, Subscriber } from 'rxjs';
-import { Action } from '@ngrx/store';
-import { Car } from '@core/models/car';
+import { of } from 'rxjs';
 
 @Injectable()
 export class CarEffects {
@@ -26,7 +24,7 @@ export class CarEffects {
       switchMap((action: fromCarActions.LoadCar) => this.carService.getCar(action.id)),
       map(car => new fromCarActions.LoadCarSuccess(car)),
       catchError(error => of(new fromCarActions.LoadCarFailed(error)))
-    )
+    );
 
   @Effect()
   DeleteCars$ = this.actions$.pipe(

@@ -39,7 +39,7 @@ export class InMemoryCarService implements InMemoryDbService {
         horsePower: 75,
         price: 12500,
         startOfSales: '2000-05-01',
-        endOfSales: '2014-04-31'
+        endOfSales: '2014-04-30'
       },
       {
         id: 4,

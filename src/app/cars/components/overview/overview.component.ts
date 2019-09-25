@@ -8,7 +8,7 @@ import { State } from '@core/store/reducers/car.reducer';
 import moment from 'moment';
 import { Sort, SortDirection } from '@angular/material';
 import { map } from 'rxjs/operators';
-import { languageSelector } from '@core/store/selectors/language.selectors';
+import { languageSelector } from '@core/store/selectors/ui.selectors';
 import { TranslateService } from '@ngx-translate/core';
 
 function compare(a: any, b: any, direction: SortDirection) {
@@ -39,7 +39,7 @@ const colNames = [
 export class CarOverviewComponent implements OnInit {
   cars$: Observable<State>;
   colNames = colNames;
-  dateformat = "YYYY-MM-DD";
+  dateformat = 'YYYY-MM-DD';
   lang: string;
 
   sortedCars$: Observable<Car[]>;
@@ -49,24 +49,19 @@ export class CarOverviewComponent implements OnInit {
     private router: Router,
     private translate: TranslateService
   ) {
-    store.select(languageSelector).subscribe(lang => this.lang = lang)
+    store.select(languageSelector).subscribe(lang => this.lang = lang);
     this.cars$ = store.select('cars');
     this.updateSortedCars();
   }
 
   ngOnInit() {
     this.store.dispatch(new LoadCars());
-    this.translate.get("dateformat").subscribe(format => this.dateformat = format);
+    this.translate.get('date.format').subscribe(format => this.dateformat = format);
   }
 
   deleteCar(id: number) {
     this.store.dispatch(new DeleteCar(id));
   }
-
-  createCar() {
-    this.router.navigateByUrl('app/cars/edit/new');
-  }
-
 
   updateSortedCars(sort?: Sort) {
     if (!sort || !sort.active || !sort.direction) {
@@ -81,7 +76,7 @@ export class CarOverviewComponent implements OnInit {
     }
   }
 
-  formatDate(date: string) {
-    return moment(date, "YYYY-MM-DD").format(this.dateformat);
+  localizeDate(date: string) {
+    return date ? moment(date, 'YYYY-MM-DD').format(this.dateformat) : '';
   }
 }

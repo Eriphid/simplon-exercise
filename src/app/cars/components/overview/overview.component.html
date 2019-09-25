@@ -1,4 +1,4 @@
-<button class="raised" mat-button (click)="createCar()">
+<button class="raised" mat-button routerLink="../edit/new">
   <mat-icon>add</mat-icon> {{'form.overview.add' | translate}}
 </button>
 
@@ -13,7 +13,11 @@
   </ng-container>
   <ng-container matColumnDef="price">
     <mat-header-cell *matHeaderCellDef mat-sort-header="price">{{'car.price' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let car">{{car.price}} €</mat-cell>
+    <mat-cell *matCellDef="let car">
+      <ng-container *ngIf="car.price">
+        {{car.price}} €
+      </ng-container>
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="fuelType">
     <mat-header-cell *matHeaderCellDef mat-sort-header="fuelType">{{'car.fuelType' | translate}}</mat-header-cell>
@@ -24,12 +28,13 @@
     <mat-cell *matCellDef="let car">{{car.horsePower}} {{'unit.hp' | translate}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="startOfSales">
-    <mat-header-cell *matHeaderCellDef mat-sort-header="startOfSales">{{'car.startOfSales' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let car">{{formatDate(car.startOfSales)}}</mat-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header="startOfSales">{{'car.startOfSales' | translate}}
+    </mat-header-cell>
+    <mat-cell *matCellDef="let car">{{localizeDate(car.startOfSales)}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="endOfSales">
     <mat-header-cell *matHeaderCellDef mat-sort-header="endOfSales">{{'car.endOfSales' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let car">{{formatDate(car.endOfSales)}}</mat-cell>
+    <mat-cell *matCellDef="let car">{{localizeDate(car.endOfSales)}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef class="action-header"></mat-header-cell>

@@ -29,5 +29,7 @@
     "unit": {
         "hp": "hp"
     },
-    "dateformat": "YYYY-MM-DD"
+    "date": {
+        "format": "YYYY-MM-DD"
+    }
 }

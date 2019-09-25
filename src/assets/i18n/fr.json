@@ -21,13 +21,15 @@
         }
     },
     "fuel": {
-        "Gasoline": "Gasoline",
+        "Gasoline": "Gasoil",
         "Diesel": "Diesel",
-        "LPG": "LPG",
+        "LPG": "GPL",
         "Electric": "Electrique"
     },
     "unit": {
         "hp": "cv"
     },
-    "dateformat": "DD/MM/YYYY"
+    "date": {
+        "format": "DD/MM/YYYY"
+    }
 }

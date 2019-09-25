@@ -1,23 +1,26 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Car } from '@core/models/car';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UpdateCar, CreateCar, LoadCars, LoadCar } from '@core/store/actions/car.actions';
 import { State } from '@core/store';
-import { Brand } from "@core/models/brand";
-import { FuelType } from "@core/models/fuel-type";
-import { carSelector } from "@core/store/selectors/car.selectors";
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import moment from "moment";
+import { Brand } from '@core/models/brand';
+import { FuelType } from '@core/models/fuel-type';
+import { carSelector } from '@core/store/selectors/car.selectors';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material';
-import { languageSelector } from '@core/store/selectors/language.selectors';
+import { languageSelector } from '@core/store/selectors/ui.selectors';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
-export class CarEditComponent implements OnInit {
+export class CarEditComponent implements OnInit, OnDestroy {
+  subsciptions = new Subscription();
+
   createNew = false;
   error: string = null;
   brands = Brand;
@@ -38,59 +41,89 @@ export class CarEditComponent implements OnInit {
   }
 
   private createForm(car: Car) {
-    
-    const form = this.fb.group({
+    const salesDateValidator = (form: FormGroup) => {
+      const sos: Date = form.value.startOfSales;
+      const eos: Date = form.value.endOfSales;
+
+      const makeError = (msg: string) => ({ 'sales-dates': msg });
+
+      let error: { 'sales-dates': string } | false;
+
+      if (sos && eos) {
+        error = sos.getTime() > eos.getTime() ? makeError('SOS Must be inferior to EOS') : null;
+        form.controls.startOfSales.setErrors(error);
+        form.controls.endOfSales.setErrors(error);
+      } else {
+        error = sos || eos ? makeError('SOS & EOS must be either both empty or both filled') : null;
+        if (sos) {
+          form.controls.startOfSales.setErrors(null);
+          form.controls.endOfSales.setErrors(error);
+        } else if (eos) {
+          form.controls.startOfSales.setErrors(error);
+          form.controls.endOfSales.setErrors(null);
+        } else {
+          form.controls.startOfSales.setErrors(null);
+          form.controls.endOfSales.setErrors(null);
+        }
+      }
+
+      return error;
+    };
+
+    const parseDate = (date: string) => date ? new Date(date) : null;
+
+    const newForm = this.fb.group({
       name: [car.name, Validators.required],
-      horsePower: [car.horsePower, Validators.required],
+      horsePower: [car.horsePower, [Validators.required, Validators.min(0)]],
       brand: [car.brand, Validators.required],
       fuelType: [car.fuelType, Validators.required],
       price: [car.price],
-      startOfSales: [car.startOfSales],
-      endOfSales: [car.endOfSales]
+      startOfSales: [parseDate(car.startOfSales)],
+      endOfSales: [parseDate(car.endOfSales)]
+    }, {
+      validators: [salesDateValidator]
     });
-    
-    const sos = form.get("startOfSales");
-    const eos = form.get("endOfSales");
-    
-    const salesDateValidator = (control: FormControl) => {
-      return Boolean(sos.value) === Boolean(eos.value) ? null : { 
-        "required": control.toString() + " is required"
-      }
-    }
-    sos.setValidators(salesDateValidator);
-    eos.setValidators(salesDateValidator);
-    // sos.valueChanges.subscribe(value => eos.setValidators(value ? Validators.required : null));
-    // eos.valueChanges.subscribe(value => sos.setValidators(value ? Validators.required : null));
 
-    return form;
+    return newForm;
+  }
+
+  routeHandler(params: Params) {
+    if (params.id === 'new') {
+      this.createNew = true;
+      this.form = this.createForm({} as Car);
+      this.id = null;
+    } else {
+      this.store.dispatch(new LoadCar(params.id));
+      const storeSubscription = this.store.select(carSelector).subscribe(car => {
+        if (car) {
+          this.form = this.createForm(car);
+          this.id = car.id;
+          this.cd.markForCheck();
+        }
+      });
+
+      this.subsciptions.add(storeSubscription);
+    }
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      if (params.id === 'new') {
-        this.createNew = true;
-        this.form = this.createForm({} as Car);
-        this.id = null;
-      } else {
-        this.store.dispatch(new LoadCar(params.id));
-        this.store.select(carSelector).subscribe(car => {
-          if (car) {
-            this.form = this.createForm(car);
-            this.id = car.id;
-            this.cd.markForCheck();
-          }
-        });
-      }
-    });
+    const routeSubscription = this.route.params.subscribe(this.routeHandler.bind(this));
+    this.subsciptions.add(routeSubscription);
   }
 
-  carFromForm(value: FormGroup["value"]) {
+  ngOnDestroy() {
+    this.subsciptions.unsubscribe();
+  }
+
+  carFromForm(value: FormGroup['value']) {
+    const formatDate = (date: Date) => !date || isNaN(date.getTime()) ? '' : moment(date).format('YYYY-MM-DD');
+
     return {
       ...value,
       id: this.id,
-      startOfSales: moment(value.startOfSales).format("YYYY-MM-DD"),
-      endOfSales: moment(value.endOfSales).format("YYYY-MM-DD")
-    }
+      startOfSales: formatDate(value.startOfSales),
+      endOfSales: formatDate(value.endOfSales)
+    };
   }
 
   onSubmit() {
@@ -103,7 +136,7 @@ export class CarEditComponent implements OnInit {
   }
 
   actionName() {
-    const action = this.createNew ? "create" : "update";
+    const action = this.createNew ? 'create' : 'update';
     return this.translate.get(`form.actions.${action}`);
   }
 }

@@ -18,12 +18,12 @@ export function reducer(state = initialState, action: fromCarActions.Actions): S
       return {
         ...state,
         loading: true
-      }
+      };
     case fromCarActions.ActionTypes.CreateCarFailed:
       return {
         ...state,
         loading: false
-      }
+      };
     case fromCarActions.ActionTypes.LoadCarsSuccess:
       return {
         ...state,
@@ -49,12 +49,12 @@ export function reducer(state = initialState, action: fromCarActions.Actions): S
       return {
         ...state,
         selected: undefined
-      }
+      };
     case fromCarActions.ActionTypes.LoadCarSuccess:
       return {
         ...state,
         selected: action.selectedCar
-      }
+      };
     default:
       return state;
   }

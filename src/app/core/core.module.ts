@@ -9,9 +9,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromCore from '@core/store';
 import { CarEffects } from '@core/store/effects/car.effects';
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { LanguageEffects } from './store/effects/language.effects';
+import { UIEffects } from './store/effects/ui.effects';
 
 @NgModule({
   declarations: [],
@@ -22,7 +22,7 @@ import { LanguageEffects } from './store/effects/language.effects';
     StoreModule.forRoot(fromCore.reducers, { runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true } }),
     EffectsModule.forRoot([
       CarEffects,
-      LanguageEffects
+      UIEffects
     ]),
     StoreDevtoolsModule.instrument({
       name: 'Simplon Exercise',

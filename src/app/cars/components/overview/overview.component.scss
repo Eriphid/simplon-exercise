@@ -2,6 +2,10 @@
 
 mat-table {
   @include mat-elevation(4);
+  
+  mat-header-cell ::ng-deep button{
+    text-align: unset;
+  }
 
   .action-header, .action-cell {
     flex: 0 0 50px;

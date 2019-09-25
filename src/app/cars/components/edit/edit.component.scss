@@ -1,5 +1,8 @@
 @import '~@angular/material/theming';
 
+button.raised {
+  margin: 5px;
+}
 
 .form-inputs{
   display: grid;
