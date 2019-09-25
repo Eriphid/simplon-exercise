@@ -1,3 +1,7 @@
+<div>
+  <span *ngFor="let lang of langList | keyvalue" [class]="'flag-icon flag-icon-' + lang.value" (click)="changeLanguage(lang.value)"></span>
+</div>
+
 <button class="raised" mat-button routerLink="../edit/new">
   <mat-icon>add</mat-icon> {{'form.overview.add' | translate}}
 </button>

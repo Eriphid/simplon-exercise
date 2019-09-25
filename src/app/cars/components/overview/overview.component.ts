@@ -10,6 +10,8 @@ import { Sort, SortDirection } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { languageSelector } from '@core/store/selectors/ui.selectors';
 import { TranslateService } from '@ngx-translate/core';
+import { Language } from '@core/models/language';
+import { ChangeLanguage } from '@core/store/actions/ui.actions';
 
 function compare(a: any, b: any, direction: SortDirection) {
   return (a < b ? -1 : 1) * (direction === 'asc' ? 1 : -1);
@@ -41,6 +43,8 @@ export class CarOverviewComponent implements OnInit {
   colNames = colNames;
   dateformat = 'YYYY-MM-DD';
   lang: string;
+
+  langList = Language;
 
   sortedCars$: Observable<Car[]>;
 
@@ -74,6 +78,10 @@ export class CarOverviewComponent implements OnInit {
         )
       );
     }
+  }
+
+  changeLanguage(lang: Language) {
+    this.store.dispatch(new ChangeLanguage(lang));
   }
 
   localizeDate(date: string) {
