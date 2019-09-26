@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ElementRef, Input } from '@angular/core';
 
 @Component({
   selector: 'app-loading-overlay',
@@ -8,6 +8,10 @@ import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular
 })
 export class LoadingOverlayComponent implements OnInit {
   diameter: number;
+
+  @Input() set bgOpacity(value: number) {
+    this.ref.nativeElement.style.backgroundColor = `rgba(0,0,0,${value})`;
+  }
 
   constructor(private ref: ElementRef<HTMLElement>) { }
 

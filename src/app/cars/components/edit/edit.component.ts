@@ -14,11 +14,13 @@ import { DateAdapter } from '@angular/material';
 import { languageSelector } from '@core/store/selectors/ui.selectors';
 import { Subscription, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { fade } from 'app/cars/animations/fade';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [fade]
 })
 export class CarEditComponent implements OnInit, OnDestroy {
   subsciptions = new Subscription();
@@ -43,7 +45,6 @@ export class CarEditComponent implements OnInit, OnDestroy {
   ) {
     store.select(languageSelector).subscribe(lang => dateAdapter.setLocale(lang));
     this.loading$ = store.select(state => state.cars.selected).pipe(map(car => car === null));
-    this.loading$.subscribe(console.log)
   }
 
   private createForm(car: Car) {

@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Language } from '@core/models/language';
 import { State } from '@core/store';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { fade } from 'app/cars/animations/fade';
 
 function compare(a: any, b: any, direction: SortDirection) {
   return (a < b ? -1 : 1) * (direction === 'asc' ? 1 : -1);
@@ -36,7 +37,8 @@ const colNames = [
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [fade]
 })
 export class CarOverviewComponent implements OnInit {
   cars$: Observable<State['cars']>;
