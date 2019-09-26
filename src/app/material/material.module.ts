@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatTableModule, MatIconModule, MatButtonModule, MatNativeDateModule } from '@angular/material';
 import { MatFormFieldModule, MatSortModule, MatInputModule, MatSelectModule, MatDatepickerModule } from '@angular/material';
+import { MatDialogModule, MatProgressSpinnerModule } from '@angular/material';
 import { DateAdapter } from '@angular/material';
 import { AppDateAdapter } from './date.adapter';
 
@@ -15,7 +16,9 @@ import { AppDateAdapter } from './date.adapter';
     MatSortModule,
     MatInputModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatTableModule,
@@ -26,7 +29,9 @@ import { AppDateAdapter } from './date.adapter';
     MatSortModule,
     MatInputModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: DateAdapter, useClass: AppDateAdapter }

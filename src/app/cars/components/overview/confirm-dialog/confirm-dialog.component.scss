@@ -1,0 +1,8 @@
+:host {
+    min-width: 50vw;
+    display: block;
+
+    mat-dialog-actions{
+        justify-content: flex-end;
+    }
+}

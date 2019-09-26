@@ -1,17 +1,17 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Car } from '@core/models/car';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { LoadCars, DeleteCar } from '@core/store/actions/car.actions';
-import { State } from '@core/store/reducers/car.reducer';
 import moment from 'moment';
-import { Sort, SortDirection } from '@angular/material';
+import { Sort, SortDirection, MatDialog } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { languageSelector } from '@core/store/selectors/ui.selectors';
 import { TranslateService } from '@ngx-translate/core';
 import { Language } from '@core/models/language';
-import { ChangeLanguage } from '@core/store/actions/ui.actions';
+import { State } from '@core/store';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 function compare(a: any, b: any, direction: SortDirection) {
   return (a < b ? -1 : 1) * (direction === 'asc' ? 1 : -1);
@@ -39,9 +39,10 @@ const colNames = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarOverviewComponent implements OnInit {
-  cars$: Observable<State>;
+  cars$: Observable<State['cars']>;
+  deleting$: Observable<State['cars']['deleting']>;
   colNames = colNames;
-  dateformat = 'YYYY-MM-DD';
+  dateformat$: Observable<string>;
   lang: string;
 
   langList = Language;
@@ -50,21 +51,25 @@ export class CarOverviewComponent implements OnInit {
 
   constructor(
     private store: Store<State>,
-    private router: Router,
-    private translate: TranslateService
+    private dialog: MatDialog
   ) {
     store.select(languageSelector).subscribe(lang => this.lang = lang);
     this.cars$ = store.select('cars');
+    this.deleting$ = store.select(state => state.cars.deleting);
     this.updateSortedCars();
   }
 
   ngOnInit() {
     this.store.dispatch(new LoadCars());
-    this.translate.get('date.format').subscribe(format => this.dateformat = format);
+    this.dateformat$ = this.store.select(state => state.ui.dateformat);
   }
 
   deleteCar(id: number) {
-    this.store.dispatch(new DeleteCar(id));
+    const sub = this.dialog.open(ConfirmDialogComponent).afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new DeleteCar(id));
+      }
+    });
   }
 
   updateSortedCars(sort?: Sort) {
@@ -80,11 +85,11 @@ export class CarOverviewComponent implements OnInit {
     }
   }
 
-  changeLanguage(lang: Language) {
-    this.store.dispatch(new ChangeLanguage(lang));
-  }
-
-  localizeDate(date: string) {
-    return date ? moment(date, 'YYYY-MM-DD').format(this.dateformat) : '';
+  localizeDate(date: string): Observable<string> {
+    // console.log(date);
+    if (date) {
+      const parsedDate = moment(date, 'YYYY-MM-DD');
+      return this.dateformat$.pipe(map(format => parsedDate.format(format)));
+    }
   }
 }

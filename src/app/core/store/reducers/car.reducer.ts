@@ -5,11 +5,13 @@ export interface State {
   list: Car[];
   loading: boolean;
   selected?: Car;
+  deleting: number[];
 }
 
 export const initialState: State = {
   list: [],
   loading: false,
+  deleting: []
 };
 
 export function reducer(state = initialState, action: fromCarActions.Actions): State {
@@ -30,10 +32,16 @@ export function reducer(state = initialState, action: fromCarActions.Actions): S
         loading: false,
         list: action.cars
       };
+    case fromCarActions.ActionTypes.DeleteCar:
+      return {
+        ...state,
+        deleting: [...state.deleting, action.id]
+      };
     case fromCarActions.ActionTypes.DeleteCarSuccess:
       return {
         ...state,
-        list: state.list.filter(car => car.id !== action.id)
+        list: state.list.filter(car => car.id !== action.id),
+        deleting: state.deleting.filter(id => id !== action.id)
       };
     case fromCarActions.ActionTypes.UpdateCarSuccess:
       return {

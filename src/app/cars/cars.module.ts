@@ -10,6 +10,9 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '@core/core.module';
 import { HttpClient } from '@angular/common/http';
 import { MaterialModule } from 'app/material/material.module';
+import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
+import { ConfirmDialogComponent } from './components/overview/confirm-dialog/confirm-dialog.component';
+import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 
 const TranslateRootModule = TranslateModule.forChild({
   loader: {
@@ -22,7 +25,10 @@ const TranslateRootModule = TranslateModule.forChild({
 @NgModule({
   declarations: [
     CarEditComponent,
-    CarOverviewComponent
+    CarOverviewComponent,
+    LanguageSelectorComponent,
+    ConfirmDialogComponent,
+    LoadingOverlayComponent
   ],
   imports: [
     CommonModule,
@@ -36,8 +42,12 @@ const TranslateRootModule = TranslateModule.forChild({
   providers: [
     CdkColumnDef
   ],
+  entryComponents: [
+    ConfirmDialogComponent
+  ],
   exports: [
-    TranslateModule
+    TranslateModule,
+    ConfirmDialogComponent
   ]
 })
 export class CarsModule { }

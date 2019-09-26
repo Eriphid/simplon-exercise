@@ -16,7 +16,8 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  styleUrls: ['./edit.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarEditComponent implements OnInit, OnDestroy {
   subsciptions = new Subscription();
@@ -35,7 +36,7 @@ export class CarEditComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private translate: TranslateService,
-    private dateAdapter: DateAdapter<Date>
+    dateAdapter: DateAdapter<Date>
   ) {
     store.select(languageSelector).subscribe(lang => dateAdapter.setLocale(lang));
   }
@@ -77,7 +78,7 @@ export class CarEditComponent implements OnInit, OnDestroy {
       horsePower: [car.horsePower, [Validators.required, Validators.min(0)]],
       brand: [car.brand, Validators.required],
       fuelType: [car.fuelType, Validators.required],
-      price: [car.price],
+      price: [car.price, Validators.min(0)],
       startOfSales: [parseDate(car.startOfSales)],
       endOfSales: [parseDate(car.endOfSales)]
     }, {
@@ -118,12 +119,22 @@ export class CarEditComponent implements OnInit, OnDestroy {
   carFromForm(value: FormGroup['value']) {
     const formatDate = (date: Date) => !date || isNaN(date.getTime()) ? '' : moment(date).format('YYYY-MM-DD');
 
-    return {
+    const car: Car = {
       ...value,
       id: this.id,
+      // Convert dates to backend date format
       startOfSales: formatDate(value.startOfSales),
       endOfSales: formatDate(value.endOfSales)
     };
+
+    // Delete empty fields
+    for (const key in car) {
+      if (!car[key]) {
+        delete car[key];
+      }
+    }
+
+    return car;
   }
 
   onSubmit() {

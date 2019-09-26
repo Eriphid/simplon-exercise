@@ -12,8 +12,9 @@ export class UIEffects {
   @Effect()
   ChangeLanguage$ = this.actions$.pipe(
     ofType(fromUIActions.ActionTypes.ChangeLanguage),
-    switchMap((action: fromUIActions.ChangeLanguage) => this.translate.use(action.language)),
-    tap((action: fromUIActions.ChangeLanguage) => localStorage.setItem('language', action.language)),
+    switchMap((action: fromUIActions.ChangeLanguage) => this.translate.use(action.language).pipe(
+      tap(() => localStorage.setItem('language', action.language))
+    )),
     switchMap(() => this.translate.get('date.format')),
     map((format: string) => new fromUIActions.ChangeDateFormat(format))
   );

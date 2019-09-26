@@ -3,14 +3,10 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.svg$/,
-                loader: 'raw-loader'
-            },
-            {
                 test: /\.scss$/,
                 use: [
                     {
-                        loader: 'resolve-url-loader'
+                        loader: 'resolve-url-loader',
                     },
                     {
                         loader: 'sass-loader',

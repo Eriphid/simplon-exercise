@@ -1,6 +1,4 @@
-<div>
-  <span *ngFor="let lang of langList | keyvalue" [class]="'flag-icon flag-icon-' + lang.value" (click)="changeLanguage(lang.value)"></span>
-</div>
+<app-language-selector></app-language-selector>
 
 <button class="raised" mat-button routerLink="../edit/new">
   <mat-icon>add</mat-icon> {{'form.overview.add' | translate}}
@@ -34,15 +32,16 @@
   <ng-container matColumnDef="startOfSales">
     <mat-header-cell *matHeaderCellDef mat-sort-header="startOfSales">{{'car.startOfSales' | translate}}
     </mat-header-cell>
-    <mat-cell *matCellDef="let car">{{localizeDate(car.startOfSales)}}</mat-cell>
+    <mat-cell *matCellDef="let car">{{localizeDate(car.startOfSales) | async}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="endOfSales">
     <mat-header-cell *matHeaderCellDef mat-sort-header="endOfSales">{{'car.endOfSales' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let car">{{localizeDate(car.endOfSales)}}</mat-cell>
+    <mat-cell *matCellDef="let car">{{localizeDate(car.endOfSales) | async}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef class="action-header"></mat-header-cell>
     <mat-cell *matCellDef="let car" class="action-cell">
+      <app-loading-overlay *ngIf="(deleting$ | async).includes(car.id)"></app-loading-overlay>
       <div class="actions">
         <button mat-button [routerLink]="['/app/cars/edit', car.id]">
           <mat-icon>create</mat-icon>
