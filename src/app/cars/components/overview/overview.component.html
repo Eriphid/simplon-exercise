@@ -1,4 +1,5 @@
 <app-language-selector></app-language-selector>
+<app-loading-overlay *ngIf="loading$ | async"></app-loading-overlay>
 
 <button class="raised" mat-button routerLink="../edit/new">
   <mat-icon>add</mat-icon> {{'form.overview.add' | translate}}

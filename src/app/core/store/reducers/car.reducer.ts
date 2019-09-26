@@ -56,7 +56,7 @@ export function reducer(state = initialState, action: fromCarActions.Actions): S
     case fromCarActions.ActionTypes.LoadCar:
       return {
         ...state,
-        selected: undefined
+        selected: null
       };
     case fromCarActions.ActionTypes.LoadCarSuccess:
       return {

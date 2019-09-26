@@ -48,6 +48,7 @@ export class CarOverviewComponent implements OnInit {
   langList = Language;
 
   sortedCars$: Observable<Car[]>;
+  loading$: Observable<boolean>;
 
   constructor(
     private store: Store<State>,
@@ -56,6 +57,7 @@ export class CarOverviewComponent implements OnInit {
     store.select(languageSelector).subscribe(lang => this.lang = lang);
     this.cars$ = store.select('cars');
     this.deleting$ = store.select(state => state.cars.deleting);
+    this.loading$ = store.select(state => state.cars.loading);
     this.updateSortedCars();
   }
 
@@ -86,7 +88,6 @@ export class CarOverviewComponent implements OnInit {
   }
 
   localizeDate(date: string): Observable<string> {
-    // console.log(date);
     if (date) {
       const parsedDate = moment(date, 'YYYY-MM-DD');
       return this.dateformat$.pipe(map(format => parsedDate.format(format)));

@@ -12,7 +12,8 @@ import moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material';
 import { languageSelector } from '@core/store/selectors/ui.selectors';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -29,6 +30,8 @@ export class CarEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
   id: number;
 
+  loading$: Observable<boolean>;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -39,6 +42,8 @@ export class CarEditComponent implements OnInit, OnDestroy {
     dateAdapter: DateAdapter<Date>
   ) {
     store.select(languageSelector).subscribe(lang => dateAdapter.setLocale(lang));
+    this.loading$ = store.select(state => state.cars.selected).pipe(map(car => car === null));
+    this.loading$.subscribe(console.log)
   }
 
   private createForm(car: Car) {
